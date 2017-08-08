@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+        <title>Topics</title>
+</head>
+<body>
+
+<a href="/topics/post" th:href="@{/topics/post}">Создать тему</a><br />
+
+<table>
+	<tr th:each="topic : ${topicsPage}">
+	    <td><a th:href="@{'/topics/'(topic_id=${topic.id})}" th:text="${topic.title}">Title ...</a></td>
+	    <td th:text="${topic.user.username}">Text ...</td>
+	    <td><a th:if="${(#httpServletRequest.remoteUser eq topic.user.username) or (#httpServletRequest.isUserInRole('ADMIN'))}" th:href="@{/topics/remove(topic_id=${topic.id})}">del</a></td>
+	</tr>
+</table>
+<div>
+    
+        <a th:if="${not topicsPage.first}" th:href="@{${'/topics/'}(page=${topicsPage.number-1},size=${topicsPage.size})}">Previous</a>
+        
+        <span th:if="${not (topicsPage.totalPages eq 0)}">
+	        <span th:each="pageNo : ${#numbers.sequence(0, (topicsPage.totalPages - 1))}" >
+	            <span th:if="${topicsPage.number  eq pageNo}">
+	                <span th:text="${pageNo + 1}"></span>
+	            </span>
+	            <a th:if="${not (topicsPage.number  eq pageNo)}" th:href="@{${'/topics/'}(page=${pageNo},size=${topicsPage.size})}">
+	                <span th:text="${pageNo + 1}"></span>
+	            </a>
+	
+	        </span>
+        </span>
+        
+        <a th:if="${not topicsPage.last}" th:href="@{${'/topics/'}(page=${topicsPage.number+1},size=${topicsPage.size})}">Next</a>
+            
+        
+</div>
+</body>
+</html>

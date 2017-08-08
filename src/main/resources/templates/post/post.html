@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+        <title>Posts</title>
+</head>
+<body>
+	<form th:action="@{/topics/post(topic_id=${postForm.topic.id})}" th:object="${postForm}" method="post">
+	    <label for="content">Content</label>:
+	    <input type="text" th:field="*{content}" autofocus="autofocus" />
+	    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span> <br />
+	    <input type="submit" value="Submit" />
+	    <a th:href="@{/topics/(topic_id=${postForm.topic.id})}">Отмена</a><br />
+	    
+	</form>
+</body>
+</html>

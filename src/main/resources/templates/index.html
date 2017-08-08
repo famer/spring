@@ -3,10 +3,14 @@
     <head>
         <title>Index</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}" />
     </head>
     <body>
         <h1>Index</h1>
+        <div th:if="${#httpServletRequest.remoteUser != null}">
+		    <p th:text="${#httpServletRequest.remoteUser}">
+		      sample_user
+		    </p>
+		</div>
         <div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">		
             Logged in user: <span sec:authentication="name"></span> |					
             Roles: <span sec:authentication="principal.authorities"></span>				
@@ -16,6 +20,7 @@
                 </form>
             </div>
         </div>
-        Go to the <a href="/login" th:href="@{/login}">login page</a>
+        Go to the <a href="/user/login" th:href="@{/user/login}">login page</a><br />
+        Go to the <a href="/user/registration" th:href="@{/user/registration}">registration page</a>
     </body>
 </html>

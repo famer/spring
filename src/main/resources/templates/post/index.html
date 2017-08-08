@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+        <title>Posts</title>
+</head>
+<body>
+
+<a th:href="@{/topics/}">К списку тем</a><br />
+<h1 th:text="${topic.title}"></h1>
+<table>
+	<tr th:each="post : ${postsPage}">
+	    <td th:text="${post.content}">Title ...</td>
+	    <td th:text="${post.user.username}">Text ...</td>
+	    <td><a th:if="${(#httpServletRequest.remoteUser eq post.user.username) or (#httpServletRequest.isUserInRole('ADMIN'))}" th:href="@{/topics/posts/remove(post_id=${post.id})}">del</a></td>
+	</tr>
+</table>
+<!-- a th:href="@{/topics/post(topic_id=${topic.id})}">Написать комментарий</a><br / -->
+<div>
+    
+        <a th:if="${not postsPage.first}" th:href="@{'/topics/'(topic_id=${topic.id},page=${postsPage.number-1},size=${postsPage.size})}">Previous</a>
+        <span th:if="${not (postsPage.totalPages eq 0)}">
+	        <span th:each="pageNo : ${#numbers.sequence(0, (postsPage.totalPages - 1))}" >
+	            <span th:if="${postsPage.number  eq pageNo}">
+	                <span th:text="${pageNo + 1}"></span>
+	            </span>
+	            <a th:if="${not (postsPage.number  eq pageNo)}" th:href="@{'/topics/'(topic_id=${topic.id},page=${pageNo},size=${postsPage.size})}">
+	                <span th:text="${pageNo + 1}"></span>
+	            </a>
+	
+	        </span>
+        </span>
+        
+        <a th:if="${not postsPage.last}" th:href="@{'/topics/'(topic_id=${topic.id},page=${postsPage.number+1},size=${postsPage.size})}">Next</a>
+            
+        
+</div>
+<div th:if="${#httpServletRequest.remoteUser != null}">
+	<form th:action="@{/topics/post(topic_id=${postForm.topic.id})}" th:object="${postForm}" method="post">
+	    <label for="content">Content</label>:
+	    <input type="text" th:field="*{content}" autofocus="autofocus" />
+	    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span> <br />
+	    <input type="submit" value="Submit" />
+	
+	</form>
+</div>
+</body>
+</html>
