@@ -45,16 +45,11 @@ public class DemoforumApplicationTests {
 	public void redirectToLoginPageByDefault() throws Exception {
 		mvc.perform(get("/")).andExpect(redirectedUrl("/users/login"));
 	}
-	/*
-	@Test
-	public void redirectToLoginPageForUnauthorized() throws Exception {
-		mvc.perform(get("/topics")).andExpect(redirectedUrl("/user/login"));
-	}
-	*/
+	
 	@Test
 	public void loginSuccess() throws Exception {
-		mvc.perform(formLogin("/users/login").user("famer")
-				.password("123")).andExpect(authenticated()).andExpect(redirectedUrl("/topics/"));
+		mvc.perform(formLogin("/users/login").user("admin")
+				.password("pass0Word!")).andExpect(authenticated()).andExpect(redirectedUrl("/topics/"));
 	}
 	
 	@Test
