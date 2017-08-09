@@ -9,7 +9,7 @@ CREATE TABLE users
     role VARCHAR(255) NOT NULL DEFAULT 'ROLE_USER'
 );
 
-insert into users(username, password, role) values('famer', '$2a$10$4Hh1UObv7gUZxgojEdKxl.HOx1TDf3F4Pp7OrSqDCCXHAERyCOw5C', 'ROLE_ADMIN');
+insert into users(username, password, role) values('admin', '$2a$10$WEFelf1KIb4DuWWZt.Jd4uGrRMoQxnprJsGfMhuOPnBh7i.OITXS6', 'ROLE_ADMIN');
 insert into users(username, password, role) values('fa', '$2a$10$IoQ4x5oEAqjR1v/bCQHWOepp.QtpCBCDZZFbMi6BrVWwN.tXNKtJK', 'ROLE_USER');
 
 DROP TABLE IF EXISTS topics CASCADE;
