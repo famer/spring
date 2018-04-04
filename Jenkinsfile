@@ -1,14 +1,24 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-        }
+  agent {
+    docker {
+      image 'maven:3-alpine'
     }
-    stages {
+    
+  }
+  stages {
+    stage('Build') {
+      parallel {
         stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
+          steps {
+            sh 'mvn -B -DskipTests clean package'
+          }
         }
+        stage('Run') {
+          steps {
+            sh 'mvn spring-boot:run'
+          }
+        }
+      }
     }
+  }
 }
